@@ -31,6 +31,24 @@
 
 ## ინსტალაცია
 
+### მზა ბინარები
+
+[Releases](https://github.com/kapo-Toolkits/dircmp/releases/latest) გვერდზე თითოეული OS-ისთვის არის დამოუკიდებელი ფაილები; Python-ის დაყენება საჭირო არ არის:
+
+| OS | GUI | CLI |
+|---|---|---|
+| Windows (x64) | `dircmp-gui-<ver>-windows-x86_64.exe` | `dircmp-<ver>-windows-x86_64.exe` |
+| macOS (Apple Silicon) | `dircmp-gui-<ver>-macos-arm64.zip` (`dircmp.app`) | `dircmp-<ver>-macos-arm64` |
+| Linux (x86_64) | `dircmp-gui-<ver>-linux-x86_64` | `dircmp-<ver>-linux-x86_64` |
+
+`SHA256SUMS.txt`-ით შეგიძლიათ ჩამოტვირთული ფაილის შემოწმება.
+
+- **Linux / macOS CLI:** ჩამოტვირთვის შემდეგ `chmod +x dircmp-*` და გაუშვით. Linux-ის ბინარები აწყობილია Ubuntu 22.04-ზე (glibc 2.35+).
+- **macOS:** ბინარები ხელმოწერილი არ არის, ამიტომ Gatekeeper პირველ გაშვებას დაბლოკავს. `dircmp.app`-ზე მარჯვენა ღილაკი → Open, ან: `xattr -dr com.apple.quarantine dircmp.app`.
+- **Windows:** SmartScreen-ის გაფრთხილებისას: More info → Run anyway.
+
+### წყაროდან
+
 ```bash
 git clone https://github.com/kapo-Toolkits/dircmp.git
 cd dircmp
@@ -39,6 +57,13 @@ pip install -e ".[gui]"
 ```
 
 Python 3.12+ საჭიროა. ბირთვს და CLI-ს გარე დამოკიდებულება არ აქვს; GUI-ს სჭირდება PySide6.
+
+საკუთარი ბინარის აწყობა (შედეგი `dist/release/`-ში):
+
+```bash
+pip install pyinstaller
+python packaging/build.py
+```
 
 ## გამოყენება
 
@@ -70,6 +95,7 @@ dircmp/core/      სკანერი, მოდელი, ჰეშირე�
 dircmp/platform/  OS-სპეციფიკური: statx, Windows ატრიბუტები, xattr
 dircmp/report/    text / json / csv
 dircmp/gui/       PySide6
+packaging/        PyInstaller: build.py, smoke.py
 tests/            pytest
 ```
 
@@ -77,7 +103,6 @@ tests/            pytest
 
 - HTML ანგარიში
 - Windows ACL და NTFS Alternate Data Streams, macOS xattr
-- PyInstaller-ის ბინარები სამივე OS-ისთვის (GitHub Releases)
 
 ## ლიცენზია
 
