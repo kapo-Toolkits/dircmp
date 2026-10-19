@@ -38,6 +38,14 @@ python -m venv .venv && . .venv/bin/activate
 pip install -e ".[gui]"
 ```
 
+Linux-ზე გამშვები (აპლიკაციების მენიუ + სამუშაო მაგიდის იარლიყი, ხატულით):
+
+```bash
+packaging/linux/install-launcher.sh            # --no-desktop, --uninstall
+```
+
+X11-ზე Qt-ს სჭირდება `libxcb-cursor0` (`sudo apt install libxcb-cursor0`); მის გარეშე GUI არ ჩაირთვება.
+
 Python 3.12+ საჭიროა. ბირთვს და CLI-ს გარე დამოკიდებულება არ აქვს; GUI-ს სჭირდება PySide6.
 
 ## გამოყენება

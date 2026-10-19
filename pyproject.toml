@@ -24,5 +24,8 @@ dircmp-gui = "dircmp.gui.app:main"
 [tool.setuptools.packages.find]
 include = ["dircmp*"]
 
+[tool.setuptools.package-data]
+"dircmp.gui" = ["resources/*.svg"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
