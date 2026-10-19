@@ -5,8 +5,8 @@
 #   packaging/linux/install-launcher.sh [--exec PATH] [--no-desktop]
 #   packaging/linux/install-launcher.sh --uninstall
 #
-# By default the launcher runs the project's .venv/bin/dircmp-gui, falling back
-# to a dircmp-gui found on PATH (e.g. after `pip install --user 'dircmp[gui]'`).
+# By default the launcher runs the repo's dircmp.sh (which sets itself up on first
+# use), falling back to a dircmp-gui found on PATH.
 set -euo pipefail
 
 APP_ID="io.github.kapo_toolkits.dircmp"
@@ -43,8 +43,8 @@ if [[ $uninstall -eq 1 ]]; then
 fi
 
 if [[ -z "$exec_path" ]]; then
-    if [[ -x "$REPO_DIR/.venv/bin/dircmp-gui" ]]; then
-        exec_path="$REPO_DIR/.venv/bin/dircmp-gui"
+    if [[ -x "$REPO_DIR/dircmp.sh" ]]; then
+        exec_path="$REPO_DIR/dircmp.sh"
     elif command -v dircmp-gui >/dev/null; then
         exec_path="$(command -v dircmp-gui)"
     else
@@ -90,8 +90,8 @@ refresh
 echo "launcher runs: $exec_path"
 
 # Qt >= 6.5 needs libxcb-cursor on X11; without it the window never appears.
-if [[ "${XDG_SESSION_TYPE:-x11}" != "wayland" ]] && command -v ldconfig >/dev/null \
-        && ! ldconfig -p | grep -q 'libxcb-cursor\.so\.0'; then
+ld_cache=$("$(command -v ldconfig || echo /sbin/ldconfig)" -p 2>/dev/null || true)
+if [[ "${XDG_SESSION_TYPE:-x11}" != "wayland" && "$ld_cache" != *libxcb-cursor.so.0* ]]; then
     echo
     echo "WARNING: libxcb-cursor0 is missing, so the Qt GUI cannot start on X11. Install it:"
     echo "  sudo apt install libxcb-cursor0      # Debian/Ubuntu/Mint"

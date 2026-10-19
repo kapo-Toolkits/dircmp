@@ -38,13 +38,18 @@ python -m venv .venv && . .venv/bin/activate
 pip install -e ".[gui]"
 ```
 
-Linux-ზე გამშვები (აპლიკაციების მენიუ + სამუშაო მაგიდის იარლიყი, ხატულით):
+უმარტივესი გზა Linux-ზე: ერთი ფაილი, რომელიც პირველ გაშვებაზე თავად ამზადებს გარემოს, ხოლო თუ სისტემას რამე აკლია (მაგ. `libxcb-cursor0`), თანხმობას გეკითხებათ და მერე აყენებს:
+
+```bash
+./dircmp.sh                  # GUI; ორჯერ დაწკაპუნებითაც მუშაობს
+./dircmp.sh --cli A B C -v   # ბრძანების ხაზი
+```
+
+მენიუს ჩანაწერი და სამუშაო მაგიდის იარლიყი (ხატულით) `dircmp.sh` პირველ გაშვებაზე შეგთავაზებს, ან ხელით:
 
 ```bash
 packaging/linux/install-launcher.sh            # --no-desktop, --uninstall
 ```
-
-X11-ზე Qt-ს სჭირდება `libxcb-cursor0` (`sudo apt install libxcb-cursor0`); მის გარეშე GUI არ ჩაირთვება.
 
 Python 3.12+ საჭიროა. ბირთვს და CLI-ს გარე დამოკიდებულება არ აქვს; GUI-ს სჭირდება PySide6.
 
