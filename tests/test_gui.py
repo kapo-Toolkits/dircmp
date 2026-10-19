@@ -5,7 +5,7 @@ import pytest
 pytest.importorskip("PySide6")
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
-from PySide6.QtCore import QCoreApplication, QSettings  # noqa: E402
+from PySide6.QtCore import QCoreApplication, QEvent, QSettings  # noqa: E402
 from PySide6.QtWidgets import QApplication  # noqa: E402
 
 from dircmp.core import compare  # noqa: E402
@@ -17,7 +17,13 @@ def app(tmp_path_factory):
     QCoreApplication.setApplicationName("dircmp-tests")
     QSettings.setPath(QSettings.Format.NativeFormat, QSettings.Scope.UserScope,
                       str(tmp_path_factory.mktemp("settings")))
-    return QApplication.instance() or QApplication([])
+    app = QApplication.instance() or QApplication([])
+    yield app
+    # Tear Qt down while Python still owns everything; otherwise PySide6 can
+    # segfault at interpreter exit on Linux CI.
+    QCoreApplication.sendPostedEvents(None, QEvent.Type.DeferredDelete)
+    if hasattr(app, "shutdown"):
+        app.shutdown()
 
 
 def test_model_and_window(app, make):
@@ -47,3 +53,5 @@ def test_model_and_window(app, make):
     w.filter_combo.setCurrentIndex(0)  # all
     assert proxy.rowCount() == 2
     w.close()
+    w.deleteLater()
+    QCoreApplication.sendPostedEvents(None, QEvent.Type.DeferredDelete)
