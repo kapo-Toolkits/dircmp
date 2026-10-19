@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <!-- three stacked folders, the front one marked with a "≠" badge -->
+  <g stroke="#1b3a5c" stroke-width="3" stroke-linejoin="round">
+    <path d="M14 22h26l8 8h46a6 6 0 0 1 6 6v40a6 6 0 0 1-6 6H14a6 6 0 0 1-6-6V28a6 6 0 0 1 6-6z" fill="#90caf9"/>
+    <path d="M24 34h26l8 8h46a6 6 0 0 1 6 6v40a6 6 0 0 1-6 6H24a6 6 0 0 1-6-6V40a6 6 0 0 1 6-6z" fill="#64b5f6"/>
+    <path d="M34 46h26l8 8h46a6 6 0 0 1 6 6v44a6 6 0 0 1-6 6H34a6 6 0 0 1-6-6V52a6 6 0 0 1 6-6z" fill="#1e88e5"/>
+  </g>
+  <circle cx="96" cy="94" r="24" fill="#e53935" stroke="#ffffff" stroke-width="4"/>
+  <g stroke="#ffffff" stroke-width="5" stroke-linecap="round">
+    <line x1="84" y1="88" x2="108" y2="88"/>
+    <line x1="84" y1="100" x2="108" y2="100"/>
+    <line x1="101" y1="80" x2="91" y2="108"/>
+  </g>
+</svg>
